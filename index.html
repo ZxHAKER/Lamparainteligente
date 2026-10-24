@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lámpara Comunitaria Inteligente · Repositorio</title>
+<style>
+:root{--bg:#0a0d14;--bg2:#101521;--card:#141a28;--line:#232b3f;--ink:#eef1f7;--mute:#8e99b3;--amber:#ffb703;--amber2:#ff8a00;--glow:rgba(255,183,3,.22);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:10;display:flex;gap:.4rem;align-items:center;padding:.7rem 1rem;background:rgba(10,13,20,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+nav b{margin-right:auto;font-size:.8rem;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;padding-right:1rem}
+nav a{color:var(--mute);text-decoration:none;font-size:.82rem;padding:.35rem .8rem;border-radius:99px;border:1px solid transparent}
+nav a:hover{color:var(--ink);border-color:var(--line);background:var(--card)}
+.hero{position:relative;text-align:center;padding:5rem 1.25rem 4rem;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#1b2236 0%,var(--bg) 70%)}
+.lamp{position:relative;width:150px;height:150px;margin:0 auto 1.5rem}
+.lamp .core{position:absolute;inset:48px;border-radius:50%;background:radial-gradient(circle,#fff6d6,var(--amber) 55%,var(--amber2));box-shadow:0 0 60px 22px var(--glow),0 0 120px 50px rgba(255,138,0,.12);animation:pulse 3.2s ease-in-out infinite}
+.lamp i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--amber);opacity:0;animation:ring 3.2s ease-out infinite}
+.lamp i:nth-child(2){animation-delay:1.07s}.lamp i:nth-child(3){animation-delay:2.14s}
+@keyframes ring{0%{transform:scale(.35);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+@keyframes pulse{50%{box-shadow:0 0 80px 30px var(--glow),0 0 150px 70px rgba(255,138,0,.16)}}
+@media (prefers-reduced-motion:reduce){.lamp i,.lamp .core{animation:none}.lamp i{opacity:.25}}
+.tag{display:inline-block;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,183,3,.4);padding:.3rem .8rem;border-radius:99px}
+h1{font-size:clamp(2.1rem,6.5vw,3.8rem);line-height:1.08;margin:1rem auto .8rem;max-width:760px;letter-spacing:-.02em}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--amber),var(--amber2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mute);max-width:600px;margin:0 auto;font-size:1.05rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1.6rem}
+.chips span{font:.78rem ui-monospace,Menlo,Consolas,monospace;background:var(--card);border:1px solid var(--line);padding:.35rem .75rem;border-radius:8px;color:var(--ink)}
+.chips span b{color:var(--amber);font-weight:600}
+main{max-width:1000px;margin:0 auto;padding:0 1.25rem 3rem}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:-1.5rem 0 1rem;position:relative}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem}
+.step b{display:block;color:var(--amber);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.25rem}
+.step p{margin:0;font-size:.92rem;color:var(--mute)}
+section{padding:3rem 0 1rem}
+h2{display:flex;align-items:baseline;gap:.9rem;font-size:1.7rem;margin:0 0 1.2rem;letter-spacing:-.01em}
+h2 span{font:700 .85rem ui-monospace,monospace;color:var(--bg);background:var(--amber);padding:.15rem .5rem;border-radius:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem}
+figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+figure:hover{transform:translateY(-4px);border-color:rgba(255,183,3,.5);box-shadow:0 12px 40px -12px var(--glow)}
+figure img{width:100%;display:block;cursor:zoom-in}figure.tall img{height:400px;object-fit:cover}
+figcaption{padding:.7rem 1rem;font-size:.85rem;color:var(--mute);border-top:1px solid var(--line)}
+.doc{max-width:640px;margin:0 auto}.doc img{height:auto}
+.codebox{background:#0c1018;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px -30px #000}
+.bar{display:flex;gap:.8rem;align-items:center;padding:.65rem 1rem;background:#111827;border-bottom:1px solid var(--line);font:.78rem ui-monospace,monospace;color:var(--mute)}
+.dots{display:flex;gap:6px}.dots i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.dots i:nth-child(2){background:#febc2e}.dots i:nth-child(3){background:#28c840}
+.bar .sp{margin-left:auto;display:flex;gap:.5rem}
+.bar button,.bar a{font:600 .76rem system-ui,sans-serif;color:#1a1200;background:var(--amber);border:0;border-radius:8px;padding:.4rem .8rem;cursor:pointer;text-decoration:none}
+.bar a{background:transparent;color:var(--ink);border:1px solid var(--line)}.bar a:hover{border-color:var(--amber)}
+pre{margin:0;padding:1.1rem 1.2rem;overflow:auto;max-height:600px;color:#d7dde3;font:.82rem/1.6 ui-monospace,Menlo,Consolas,monospace;tab-size:2}
+.k{color:#ff7b72}.f{color:#d2a8ff}.c{color:#79c0ff}.n{color:#ffa657}.s{color:#a5d6a7}
+.vids{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center}
+.phone{width:min(300px,100%);background:#05070b;border:8px solid #1c2336;border-radius:34px;overflow:hidden;box-shadow:0 20px 50px -20px #000,0 0 0 1px var(--line)}
+.phone video{display:block;width:100%;aspect-ratio:9/16;background:#000;object-fit:cover}
+.phone+.cap,.vwrap p{text-align:center}
+.vwrap{display:flex;flex-direction:column;align-items:center;gap:.6rem}.vwrap p{margin:0;font-size:.85rem;color:var(--mute)}
+#lb{position:fixed;inset:0;background:rgba(5,7,12,.94);display:none;align-items:center;justify-content:center;z-index:30;padding:1rem;overflow:auto}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:10px}
+footer{text-align:center;color:var(--mute);font-size:.8rem;padding:2.5rem 1rem 3.5rem;border-top:1px solid var(--line)}
+</style></head><body>
+<nav><b>Lámpara PIR</b><a href="#codigo">Código</a><a href="#documento">Documento</a><a href="#fotos">Fotos</a><a href="#videos">Videos</a></nav>
+<header class="hero">
+<div class="lamp"><i></i><i></i><i></i><div class="core"></div></div>
+<span class="tag">Repositorio del proyecto</span>
+<h1>Lámpara Comunitaria <em>Inteligente</em></h1>
+<p class="sub">Una lámpara con sensor de movimiento PIR que se enciende sola al detectar presencia, para ahorrar energía en espacios comunitarios.</p>
+<div class="chips"><span>Sensor PIR · <b>pin 4</b></span><span>LED 1 · <b>pin 8</b></span><span>LED 2 · <b>pin 9</b></span><span>Encendido · <b>10 s</b></span></div>
+</header>
+<main>
+<div class="steps">
+<div class="step"><b>1 · Detecta</b><p>El sensor PIR lee movimiento en el pin 4.</p></div>
+<div class="step"><b>2 · Valida</b><p>Triple filtro: tres lecturas seguidas separadas por 50 ms.</p></div>
+<div class="step"><b>3 · Enciende</b><p>Los dos LED se prenden 10 segundos y luego se apagan.</p></div>
+</div>
+<section id="codigo"><h2><span>01</span>Código Arduino</h2>
+<div class="codebox"><div class="bar"><div class="dots"><i></i><i></i><i></i></div><span>lampara_pir.ino</span><div class="sp"><a href="media/lampara_pir.ino" download>Descargar</a><button id="cp" type="button">Copiar código</button></div></div>
+<pre id="code"><span class="k">const</span> <span class="k">int</span> pinSensor = <span class="n">4</span>;     
+<span class="k">const</span> <span class="k">int</span> pinLED1 = <span class="n">8</span>;       
+<span class="k">const</span> <span class="k">int</span> pinLED2 = <span class="n">9</span>;       
+
+<span class="k">const</span> <span class="k">unsigned</span> <span class="k">long</span> tiempoEncendido = <span class="n">10000</span>; 
+<span class="k">bool</span> temporizadorActivo = <span class="k">false</span>;
+<span class="k">unsigned</span> <span class="k">long</span> tiempoInicio = <span class="n">0</span>;
+
+<span class="k">void</span> <span class="f">setup</span>() {
+  Serial.<span class="f">begin</span>(<span class="n">9600</span>);
+  
+  <span class="f">pinMode</span>(pinSensor, <span class="c">INPUT</span>);
+  <span class="f">pinMode</span>(pinLED1, <span class="c">OUTPUT</span>);
+  <span class="f">pinMode</span>(pinLED2, <span class="c">OUTPUT</span>);
+}
+
+<span class="k">void</span> <span class="f">loop</span>() {
+  
+  <span class="k">if</span> (!temporizadorActivo) {
+    <span class="k">if</span> (<span class="f">digitalRead</span>(pinSensor) == <span class="c">HIGH</span>) {
+      
+      
+      <span class="f">delay</span>(<span class="n">50</span>);
+      <span class="k">if</span> (<span class="f">digitalRead</span>(pinSensor) == <span class="c">HIGH</span>) {
+        
+        
+        <span class="f">delay</span>(<span class="n">50</span>);
+        <span class="k">if</span> (<span class="f">digitalRead</span>(pinSensor) == <span class="c">HIGH</span>) {
+          Serial.<span class="f">println</span>(<span class="s">&quot;¡Movimiento real validado por triple filtro!&quot;</span>);
+          
+          <span class="f">digitalWrite</span>(pinLED1, <span class="c">HIGH</span>);
+          <span class="f">digitalWrite</span>(pinLED2, <span class="c">HIGH</span>);
+          
+          temporizadorActivo = <span class="k">true</span>;
+          tiempoInicio = <span class="f">millis</span>();
+        }
+      }
+    }
+  }
+
+  
+  <span class="k">if</span> (temporizadorActivo) {
+    <span class="k">if</span> (<span class="f">millis</span>() - tiempoInicio &gt;= tiempoEncendido) {
+      <span class="f">digitalWrite</span>(pinLED1, <span class="c">LOW</span>);
+      <span class="f">digitalWrite</span>(pinLED2, <span class="c">LOW</span>);
+      
+      temporizadorActivo = <span class="k">false</span>;
+      Serial.<span class="f">println</span>(<span class="s">&quot;Tiempo cumplido. Esperando...&quot;</span>);
+    }
+  }
+
+  <span class="f">delay</span>(<span class="n">50</span>);
+}</pre></div></section>
+<section id="documento"><h2><span>02</span>Documento</h2>
+<div class="doc"><figure><img src="media/documento-tabulacion.jpg" alt="Documento escrito a mano con la tabulación de datos de la encuesta"><figcaption>Tabulación de datos de la encuesta · toca para ampliar</figcaption></figure></div></section>
+<section id="fotos"><h2><span>03</span>Fotos del proyecto</h2>
+<div class="grid"><figure class="tall"><img src="media/sensor-pir.jpg" alt="Sensor PIR con sus cables conectados"><figcaption>Sensor PIR con sus cables</figcaption></figure>
+<figure class="tall"><img src="media/lampara.jpg" alt="Prototipo de la lámpara con base negra y pantalla superior"><figcaption>Prototipo de la lámpara</figcaption></figure></div></section>
+<section id="videos"><h2><span>04</span>Videos</h2>
+<div class="vids"><div class="vwrap"><div class="phone"><video src="media/video1.mp4" controls muted playsinline preload="metadata"></video></div><p>Video 1</p></div>
+<div class="vwrap"><div class="phone"><video src="media/video2.mp4" controls muted playsinline preload="metadata"></video></div><p>Video 2</p></div></div></section>
+</main>
+<footer>Lámpara Comunitaria Inteligente · Sensor PIR Grupo: Santiago Arias, Ian Santiago Osorio, David Lopez Quintero y Samuel Santoyo</footer>
+<div id="lb"><img alt=""></div>
+<script>
+const lb=document.getElementById('lb'),li=lb.querySelector('img');
+document.querySelectorAll('figure img').forEach(i=>i.onclick=()=>{li.src=i.src;lb.classList.add('on')});lb.onclick=()=>lb.classList.remove('on');
+document.getElementById('cp').onclick=async function(){const t=document.getElementById('code').innerText;
+ try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}
+ this.textContent='¡Copiado!';setTimeout(()=>this.textContent='Copiar código',1800)};
+</script></body></html>
